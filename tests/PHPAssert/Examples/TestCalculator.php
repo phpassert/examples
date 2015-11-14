@@ -1,25 +1,53 @@
 <?php
 namespace tests\PHPAssert\Examples;
 
+use PHPAssert\Core\Error\SkipException;
 use PHPAssert\Examples\Calculator;
 
 class TestCalculator
 {
+    /**
+     * @var Calculator
+     */
+    private $calc;
+
+    function beforeMethod()
+    {
+        $this->calc = new Calculator();
+    }
+
     function testAddWithNoArgs()
     {
-        $calc = new Calculator();
-        assert(0 === $calc->add());
+        assert(0 === $this->calc->add());
     }
 
     function testAddWithOneArg()
     {
-        $calc = new Calculator();
-        assert(1 === $calc->add(1));
+        assert(1 === $this->calc->add(1));
     }
 
     function testAdd()
     {
-        $calc = new Calculator();
-        assert(3 === $calc->add(1, 2));
+        assert(3 === $this->calc->add(1, 2));
+    }
+
+    function testSubtractWithNoArg()
+    {
+        assert(0 === $this->calc->subtract());
+    }
+
+    function testSubtractWithArg()
+    {
+        assert(1 === $this->calc->subtract(1));
+    }
+
+    function testSubtractWithArgs()
+    {
+        assert(0 === $this->calc->subtract(3, 2, 1));
+    }
+
+    function testNotImplemented()
+    {
+        throw new SkipException('Not yet implemented :c');
     }
 }
